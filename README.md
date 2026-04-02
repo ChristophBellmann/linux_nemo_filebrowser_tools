@@ -22,7 +22,7 @@ Lokales Git-Repo fuer meine Nemo-Rechtsklick-Tools.
 ## Installation
 
 ```bash
-./install.sh
+./install.sh --all
 ```
 
 Selektiv:
@@ -72,7 +72,7 @@ Optional fuer `install.sh`:
 Standardkonfiguration:
 
 ```bash
-./install.sh
+./install.sh --all
 ```
 
 Danach liegt standardmaessig vor:

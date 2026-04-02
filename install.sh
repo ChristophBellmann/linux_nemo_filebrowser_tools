@@ -30,11 +30,16 @@ Environment overrides:
   MERGE_NEMO_RAM_SETTINGS
 
 Examples:
-  ./install.sh
+  ./install.sh --all
   ./install.sh --vaapi-whatsapp
   ./install.sh --extract-tar7z --multicore-zip
 EOF
 }
+
+if [ "$#" -eq 0 ]; then
+  usage
+  exit 0
+fi
 
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 actions_src="$repo_dir/actions"
@@ -198,7 +203,8 @@ while [ "$#" -gt 0 ]; do
 done
 
 if [ "${#selected_tools[@]}" -eq 0 ]; then
-  select_all_tools
+  usage
+  exit 0
 fi
 
 mkdir -p "$actions_dst" "$bin_dst"
