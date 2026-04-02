@@ -24,6 +24,13 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   exit 0
 fi
 
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+config_file="${NEMO_WA_CONFIG_FILE:-$config_home/nemo-actions/vaapi-whatsapp-180mb.conf}"
+if [ -r "$config_file" ]; then
+  # shellcheck disable=SC1090
+  . "$config_file"
+fi
+
 if [[ $# -lt 1 || $# -gt 3 ]]; then
   usage >&2
   exit 1
@@ -31,18 +38,18 @@ fi
 
 INPUT="$1"
 OUTPUT="${2:-${INPUT%.*}_whatsapp.mp4}"
-TARGET_MB="${3:-180}"
-AUDIO_KBPS="${AUDIO_KBPS:-128}"
-MAX_WIDTH="${MAX_WIDTH:-1920}"
-MAX_HEIGHT="${MAX_HEIGHT:-1080}"
-SAFETY_FACTOR="${SAFETY_FACTOR:-0.94}"
+TARGET_MB="${3:-${NEMO_WA_TARGET_MB:-180}}"
+AUDIO_KBPS="${AUDIO_KBPS:-${NEMO_WA_AUDIO_KBPS:-128}}"
+MAX_WIDTH="${MAX_WIDTH:-${NEMO_WA_MAX_WIDTH:-1920}}"
+MAX_HEIGHT="${MAX_HEIGHT:-${NEMO_WA_MAX_HEIGHT:-1080}}"
+SAFETY_FACTOR="${SAFETY_FACTOR:-${NEMO_WA_SAFETY_FACTOR:-0.94}}"
 
 if [[ ! -f "$INPUT" ]]; then
   echo "Input file not found: $INPUT" >&2
   exit 1
 fi
 
-VAAPI_DEVICE="${VAAPI_DEVICE:-/dev/dri/renderD128}"
+VAAPI_DEVICE="${VAAPI_DEVICE:-${NEMO_WA_VAAPI_DEVICE:-/dev/dri/renderD128}}"
 if [[ ! -e "$VAAPI_DEVICE" ]]; then
   VAAPI_DEVICE="$(ls /dev/dri/renderD* 2>/dev/null | head -n1 || true)"
 fi

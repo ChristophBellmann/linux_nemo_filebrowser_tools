@@ -25,6 +25,15 @@ Lokales Git-Repo fuer meine Nemo-Rechtsklick-Tools.
 ./install.sh
 ```
 
+Selektiv:
+
+```bash
+./install.sh --extract-tar7z
+./install.sh --multicore-zip
+./install.sh --vaapi-whatsapp
+./install.sh --extract-tar7z --vaapi-whatsapp
+```
+
 Standardpfade:
 
 - `~/.local/share/nemo/actions`
@@ -45,6 +54,7 @@ Optional fuer `install.sh`:
 - `INSTALL_NEMO_CONFIG=0` installiert keine Config-Dateien
 - `OVERWRITE_NEMO_CONFIG=1` ueberschreibt vorhandene aktive Configs
 - `MERGE_NEMO_RAM_SETTINGS=1` traegt bei bestehender `multicore-zip.conf` nur fehlende RAM-Keys nach
+- `./install.sh --help` zeigt alle installierbaren Tools und Optionen
 
 ## Abhaengigkeiten
 
@@ -93,6 +103,21 @@ estimate ~= ceil(threads / 2) * dict_mib * factor
 ```
 
 Standardmaessig ist `factor=11`.
+
+## VAAPI-WhatsApp konfigurieren
+
+`scripts/vaapi_whatsapp_180mb.sh` liest optional:
+
+- `~/.config/nemo-actions/vaapi-whatsapp-180mb.conf`
+
+Wichtige Variablen:
+
+- `NEMO_WA_TARGET_MB=180`
+- `NEMO_WA_AUDIO_KBPS=128`
+- `NEMO_WA_MAX_WIDTH=1920`
+- `NEMO_WA_MAX_HEIGHT=1080`
+- `NEMO_WA_SAFETY_FACTOR=0.94`
+- `NEMO_WA_VAAPI_DEVICE=/dev/dri/renderD128`
 
 ## Extras
 
