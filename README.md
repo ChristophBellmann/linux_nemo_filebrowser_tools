@@ -7,8 +7,8 @@ Lokales Git-Repo fuer meine Nemo-Rechtsklick-Tools.
 - `actions/`: Nemo-Action-Dateien fuer das Kontextmenue
 - `scripts/`: zugehoerige Shell-Skripte
 - `extras/`: vorhandene Helferskripte, die aktuell nicht automatisch installiert werden
-- `config/`: Konfigurationsvorlagen
-- `install.sh`: kopiert Actions, Skripte und Konfigurationsvorlagen in die ueblichen Nemo-Pfade
+- `config/`: lauffaehige Standardkonfigurationen
+- `install.sh`: kopiert Actions, Skripte und Standardkonfigurationen in die ueblichen Nemo-Pfade
 
 ## Enthaltene Actions
 
@@ -59,7 +59,7 @@ Optional fuer `install.sh`:
 
 `scripts/nemo-multicore-zip.sh` unterstuetzt Presets und eine grobe Speicherplanung fuer `7z` mit `LZMA2`.
 
-Optionale Konfigurationsdatei:
+Standardkonfiguration:
 
 ```bash
 ./install.sh
@@ -68,9 +68,8 @@ Optionale Konfigurationsdatei:
 Danach liegt standardmaessig vor:
 
 - `~/.config/nemo-actions/multicore-zip.conf`
-- `~/.config/nemo-actions/multicore-zip.conf.example`
 
-Bei bestehender `multicore-zip.conf` bleibt die aktive Konfiguration standardmaessig erhalten. Der Installer aktualisiert nur die `.example`-Datei und kann fehlende RAM-bezogene Variablen in die aktive Config nachtragen.
+Bei bestehender `multicore-zip.conf` bleibt die aktive Konfiguration standardmaessig erhalten. Der Installer installiert die Standard-Config nur bei Erstinstallation und kann spaeter fehlende RAM-bezogene Variablen in die aktive Config nachtragen.
 
 Wichtige Variablen:
 

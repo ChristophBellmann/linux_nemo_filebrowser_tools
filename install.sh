@@ -18,7 +18,7 @@ overwrite_config="${OVERWRITE_NEMO_CONFIG:-0}"
 merge_ram_settings="${MERGE_NEMO_RAM_SETTINGS:-1}"
 
 sync_multicore_zip_ram_settings() {
-  local template="$1"
+  local source_config="$1"
   local target="$2"
   local key value
   local -a ram_keys=(
@@ -36,7 +36,7 @@ sync_multicore_zip_ram_settings() {
       continue
     fi
 
-    value="$(awk -F= -v key="$key" '$1 == key {sub(/^[^=]*=/, "", $0); print $0; exit}' "$template")"
+    value="$(awk -F= -v key="$key" '$1 == key {sub(/^[^=]*=/, "", $0); print $0; exit}' "$source_config")"
     [ -n "$value" ] || continue
     printf '%s=%s\n' "$key" "$value" >> "$target"
   done
@@ -74,25 +74,22 @@ fi
 
 if [ "$install_config" = "1" ]; then
   found_configs=0
-  for template in "$config_src"/*.conf.example; do
-    [ -e "$template" ] || continue
+  for source_config in "$config_src"/*.conf; do
+    [ -e "$source_config" ] || continue
     found_configs=1
 
-    base_name="$(basename "$template" .example)"
+    base_name="$(basename "$source_config")"
     target="$config_dst/$base_name"
-    dist_target="$config_dst/$(basename "$template")"
-
-    install -m 0644 "$template" "$dist_target"
 
     if [ "$overwrite_config" = "1" ] || [ ! -e "$target" ]; then
-      install -m 0644 "$template" "$target"
+      install -m 0644 "$source_config" "$target"
     elif [ "$merge_ram_settings" = "1" ] && [ "$base_name" = "multicore-zip.conf" ]; then
-      sync_multicore_zip_ram_settings "$template" "$target"
+      sync_multicore_zip_ram_settings "$source_config" "$target"
     fi
   done
 
   if [ "$found_configs" -eq 0 ]; then
-    echo "Keine .conf.example-Dateien in $config_src gefunden." >&2
+    echo "Keine .conf-Dateien in $config_src gefunden." >&2
     exit 1
   fi
 fi
