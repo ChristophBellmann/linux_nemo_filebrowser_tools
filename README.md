@@ -44,6 +44,7 @@ Optional fuer `install.sh`:
 
 - `INSTALL_NEMO_CONFIG=0` installiert keine Config-Dateien
 - `OVERWRITE_NEMO_CONFIG=1` ueberschreibt vorhandene aktive Configs
+- `MERGE_NEMO_RAM_SETTINGS=1` traegt bei bestehender `multicore-zip.conf` nur fehlende RAM-Keys nach
 
 ## Abhaengigkeiten
 
@@ -68,6 +69,8 @@ Danach liegt standardmaessig vor:
 
 - `~/.config/nemo-actions/multicore-zip.conf`
 - `~/.config/nemo-actions/multicore-zip.conf.example`
+
+Bei bestehender `multicore-zip.conf` bleibt die aktive Konfiguration standardmaessig erhalten. Der Installer aktualisiert nur die `.example`-Datei und kann fehlende RAM-bezogene Variablen in die aktive Config nachtragen.
 
 Wichtige Variablen:
 

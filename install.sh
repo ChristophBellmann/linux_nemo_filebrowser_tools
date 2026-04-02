@@ -15,6 +15,32 @@ bin_dst="${BIN_DIR:-${XDG_BIN_HOME:-$default_bin_dir}}"
 config_dst="${NEMO_CONFIG_DIR:-$config_home/nemo-actions}"
 install_config="${INSTALL_NEMO_CONFIG:-1}"
 overwrite_config="${OVERWRITE_NEMO_CONFIG:-0}"
+merge_ram_settings="${MERGE_NEMO_RAM_SETTINGS:-1}"
+
+sync_multicore_zip_ram_settings() {
+  local template="$1"
+  local target="$2"
+  local key value
+  local -a ram_keys=(
+    NEMO_7Z_RAM_BUDGET_GIB
+    NEMO_7Z_THREADS
+    NEMO_7Z_DICT
+    NEMO_7Z_ESTIMATE_FACTOR
+    NEMO_TAR_MEMORY_MAX
+  )
+
+  [ -e "$target" ] || return 0
+
+  for key in "${ram_keys[@]}"; do
+    if grep -Eq "^[[:space:]]*${key}=" "$target"; then
+      continue
+    fi
+
+    value="$(awk -F= -v key="$key" '$1 == key {sub(/^[^=]*=/, "", $0); print $0; exit}' "$template")"
+    [ -n "$value" ] || continue
+    printf '%s=%s\n' "$key" "$value" >> "$target"
+  done
+}
 
 mkdir -p "$actions_dst" "$bin_dst"
 
@@ -60,6 +86,8 @@ if [ "$install_config" = "1" ]; then
 
     if [ "$overwrite_config" = "1" ] || [ ! -e "$target" ]; then
       install -m 0644 "$template" "$target"
+    elif [ "$merge_ram_settings" = "1" ] && [ "$base_name" = "multicore-zip.conf" ]; then
+      sync_multicore_zip_ram_settings "$template" "$target"
     fi
   done
 
