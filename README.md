@@ -7,7 +7,8 @@ Lokales Git-Repo fuer meine Nemo-Rechtsklick-Tools.
 - `actions/`: Nemo-Action-Dateien fuer das Kontextmenue
 - `scripts/`: zugehoerige Shell-Skripte
 - `extras/`: vorhandene Helferskripte, die aktuell nicht automatisch installiert werden
-- `install.sh`: kopiert die Actions und Skripte in die ueblichen Nemo-Pfade
+- `config/`: Konfigurationsvorlagen
+- `install.sh`: kopiert Actions, Skripte und Konfigurationsvorlagen in die ueblichen Nemo-Pfade
 
 ## Enthaltene Actions
 
@@ -28,13 +29,21 @@ Standardpfade:
 
 - `~/.local/share/nemo/actions`
 - `~/.local/bin`
+- `~/.config/nemo-actions`
 
 Konfigurierbar ueber Umgebungsvariablen:
 
 - `NEMO_ACTIONS_DIR`
 - `BIN_DIR`
+- `NEMO_CONFIG_DIR`
 - `XDG_DATA_HOME`
 - `XDG_BIN_HOME`
+- `XDG_CONFIG_HOME`
+
+Optional fuer `install.sh`:
+
+- `INSTALL_NEMO_CONFIG=0` installiert keine Config-Dateien
+- `OVERWRITE_NEMO_CONFIG=1` ueberschreibt vorhandene aktive Configs
 
 ## Abhaengigkeiten
 
@@ -52,9 +61,13 @@ Konfigurierbar ueber Umgebungsvariablen:
 Optionale Konfigurationsdatei:
 
 ```bash
-mkdir -p ~/.config/nemo-actions
-cp config/multicore-zip.conf.example ~/.config/nemo-actions/multicore-zip.conf
+./install.sh
 ```
+
+Danach liegt standardmaessig vor:
+
+- `~/.config/nemo-actions/multicore-zip.conf`
+- `~/.config/nemo-actions/multicore-zip.conf.example`
 
 Wichtige Variablen:
 
