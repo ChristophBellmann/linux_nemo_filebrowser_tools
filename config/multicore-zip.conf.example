@@ -1,0 +1,22 @@
+# Copy to:
+#   ~/.config/nemo-actions/multicore-zip.conf
+#
+# Then adjust the values you want.
+
+# Presets:
+#   safe       smaller dictionary and fewer threads
+#   balanced   moderate memory usage, still good compression
+#   aggressive larger dictionary and more threads
+#   legacy     previous repo behavior: 320m dictionary and all CPU threads
+NEMO_7Z_PRESET=balanced
+
+# Approximate compression-memory target in GiB.
+# The script uses a heuristic for LZMA2 and adjusts thread count to fit better.
+NEMO_7Z_RAM_BUDGET_GIB=16
+
+# Optional manual overrides:
+# NEMO_7Z_THREADS=8
+# NEMO_7Z_DICT=128m
+# NEMO_7Z_LEVEL=9
+# NEMO_7Z_ESTIMATE_FACTOR=11
+# NEMO_TAR_MEMORY_MAX=2G
