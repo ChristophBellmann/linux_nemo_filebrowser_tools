@@ -15,7 +15,7 @@ Installable tools:
 General options:
   -h, --help            Show this help
   --no-config           Do not install config files
-  --overwrite-config    Overwrite existing active config files
+  --overwrite-config    Overwrite existing active config files after backing them up
   --no-merge-ram        Do not merge missing RAM settings into multicore-zip.conf
 
 Environment overrides:
@@ -25,6 +25,7 @@ Environment overrides:
   XDG_DATA_HOME
   XDG_BIN_HOME
   XDG_CONFIG_HOME
+  NEMO_CONFIG_BACKUP_DIR
   INSTALL_NEMO_CONFIG
   OVERWRITE_NEMO_CONFIG
   MERGE_NEMO_RAM_SETTINGS
@@ -53,6 +54,7 @@ default_bin_dir="$HOME/.local/bin"
 actions_dst="${NEMO_ACTIONS_DIR:-$data_home/nemo/actions}"
 bin_dst="${BIN_DIR:-${XDG_BIN_HOME:-$default_bin_dir}}"
 config_dst="${NEMO_CONFIG_DIR:-$config_home/nemo-actions}"
+config_backup_dir="${NEMO_CONFIG_BACKUP_DIR:-$repo_dir/backup/system-configs}"
 install_config="${INSTALL_NEMO_CONFIG:-1}"
 overwrite_config="${OVERWRITE_NEMO_CONFIG:-0}"
 merge_ram_settings="${MERGE_NEMO_RAM_SETTINGS:-1}"
@@ -96,6 +98,21 @@ sync_missing_keys() {
   done
 }
 
+backup_existing_config() {
+  local target="$1"
+  local backup_name timestamp backup_path
+
+  [ -e "$target" ] || return 0
+
+  mkdir -p "$config_backup_dir"
+
+  backup_name="$(basename "$target")"
+  timestamp="$(date +%Y%m%d-%H%M%S)"
+  backup_path="$config_backup_dir/${backup_name}.${timestamp}"
+
+  cp -a "$target" "$backup_path"
+}
+
 install_config_file() {
   local base_name="$1"
   local source_config="$config_src/$base_name"
@@ -107,6 +124,9 @@ install_config_file() {
   }
 
   if [ "$overwrite_config" = "1" ] || [ ! -e "$target" ]; then
+    if [ "$overwrite_config" = "1" ]; then
+      backup_existing_config "$target"
+    fi
     install -m 0644 "$source_config" "$target"
     return 0
   fi
@@ -226,6 +246,9 @@ echo "  $actions_dst"
 echo "  $bin_dst"
 if [ "$install_config" = "1" ]; then
   echo "  $config_dst"
+  if [ "$overwrite_config" = "1" ]; then
+    echo "  $config_backup_dir"
+  fi
 fi
 echo
 echo "Nemo ggf. neu starten:"

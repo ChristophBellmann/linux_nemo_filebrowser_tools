@@ -45,6 +45,7 @@ Konfigurierbar ueber Umgebungsvariablen:
 - `NEMO_ACTIONS_DIR`
 - `BIN_DIR`
 - `NEMO_CONFIG_DIR`
+- `NEMO_CONFIG_BACKUP_DIR`
 - `XDG_DATA_HOME`
 - `XDG_BIN_HOME`
 - `XDG_CONFIG_HOME`
@@ -52,9 +53,11 @@ Konfigurierbar ueber Umgebungsvariablen:
 Optional fuer `install.sh`:
 
 - `INSTALL_NEMO_CONFIG=0` installiert keine Config-Dateien
-- `OVERWRITE_NEMO_CONFIG=1` ueberschreibt vorhandene aktive Configs
+- `OVERWRITE_NEMO_CONFIG=1` ueberschreibt vorhandene aktive Configs und legt vorher ein Backup im Repo an
 - `MERGE_NEMO_RAM_SETTINGS=1` traegt bei bestehender `multicore-zip.conf` nur fehlende RAM-Keys nach
 - `./install.sh --help` zeigt alle installierbaren Tools und Optionen
+
+Bei `--overwrite-config` oder `OVERWRITE_NEMO_CONFIG=1` werden vorhandene System-Configs vor dem Ueberschreiben nach `backup/system-configs/` im Repo kopiert. Der Zielordner ist bei Bedarf ueber `NEMO_CONFIG_BACKUP_DIR` anpassbar.
 
 ## Abhaengigkeiten
 
