@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -u
 
-SCRIPT="${HOME}/.local/bin/vaapi_whatsapp_180mb.sh"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT="$script_dir/vaapi_whatsapp_180mb.sh"
 
 "$SCRIPT" "$@"
 rc=$?

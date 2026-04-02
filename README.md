@@ -24,10 +24,17 @@ Lokales Git-Repo fuer meine Nemo-Rechtsklick-Tools.
 ./install.sh
 ```
 
-Installiert nach:
+Standardpfade:
 
 - `~/.local/share/nemo/actions`
 - `~/.local/bin`
+
+Konfigurierbar ueber Umgebungsvariablen:
+
+- `NEMO_ACTIONS_DIR`
+- `BIN_DIR`
+- `XDG_DATA_HOME`
+- `XDG_BIN_HOME`
 
 ## Abhaengigkeiten
 

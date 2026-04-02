@@ -1,7 +1,7 @@
 [Nemo Action]
 Name=WhatsApp MP4 (VA-API, 180 MB)
 Comment=Konvertiert die markierte MKV in MP4 (H.264/AAC) im selben Ordner
-Exec=sh -c '"$HOME"/.local/bin/nemo-vaapi-whatsapp-action.sh "$1"' sh %F
+Exec=sh -c 'bin_dir="${XDG_BIN_HOME:-$HOME/.local/bin}"; "$bin_dir"/nemo-vaapi-whatsapp-action.sh "$1"' sh %F
 Icon=video-x-generic
 Selection=s
 Extensions=mkv;

@@ -1,7 +1,7 @@
 [Nemo Action]
 Name=Multicore ZIP erstellen (mit Progress)
 Comment=Archiv mit 7-Zip und allen CPU-Kernen erzeugen (Temp auf Quell-Laufwerk)
-Exec=sh -c '"$HOME"/.local/bin/nemo-multicore-zip.sh "$@"' sh %F
+Exec=sh -c 'bin_dir="${XDG_BIN_HOME:-$HOME/.local/bin}"; "$bin_dir"/nemo-multicore-zip.sh "$@"' sh %F
 Icon=folder-compressed
 Selection=Any
 Extensions=dir;

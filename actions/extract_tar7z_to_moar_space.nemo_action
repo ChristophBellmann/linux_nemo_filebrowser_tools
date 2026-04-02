@@ -1,7 +1,7 @@
 [Nemo Action]
 Name=Entpacke an Ort und Stelle (mit Progress)
 Comment=tar.7z direkt im aktuellen Ordner entpacken
-Exec=sh -c '"$HOME"/.local/bin/nemo-extract-tar7z-here.sh "$1"' sh %F
+Exec=sh -c 'bin_dir="${XDG_BIN_HOME:-$HOME/.local/bin}"; "$bin_dir"/nemo-extract-tar7z-here.sh "$1"' sh %F
 Icon=utilities-terminal
 Selection=Single
 Extensions=tar.7z;
